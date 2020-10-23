@@ -1,9 +1,9 @@
 import SimpleITK as sitk
 import os
 import argparse
+import itk
 from image_io import organize_series, dicom2nrrd
-from preprocessing import gradient, sigmoid
-
+from preprocessing import gradient, sigmoid, hough_transform
 
 if __name__ == "__main__":
     # init arg parser
@@ -21,6 +21,8 @@ if __name__ == "__main__":
                         help='percorso al file di output')
     parser.add_argument('--run_sigmoid', action='store_true', 
                         help='esegue sigmoid filter')
+    parser.add_argument('--run_hough_transform', action='store_true', 
+                        help='esegue hough transform')
 
     args = parser.parse_args()
     
@@ -35,6 +37,9 @@ if __name__ == "__main__":
     
     if (args.run_sigmoid and args.path_to_nrrd and args.output_path):
         sigmoid(args.path_to_nrrd, args.output_path)
+
+    if (args.run_hough_transform and args.path_to_nrrd and args.output_path):
+        hough_transform(args.path_to_nrrd, args.output_path) 
 
 
 
