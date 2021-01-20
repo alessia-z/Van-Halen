@@ -14,6 +14,10 @@ if __name__ == "__main__":
                         help='percorso alla cartella dicom')
     parser.add_argument('--path_to_nrrd', action='store',
                         help='percorso al file nrrd')
+    parser.add_argument('--path_to_nrrd2', action='store',
+                        help='percorso al file nrrd 2')
+    parser.add_argument('--path_to_vtk', action='store',
+                        help='percorso al file vtk')
     parser.add_argument('--organize_series', action='store_true', 
                         help='organizza lo studio in sottocartelle')
     parser.add_argument('--run_gradient', action='store_true', 
@@ -43,7 +47,6 @@ if __name__ == "__main__":
     parser.add_argument('--aorta_segmentation', action = 'store_true', 
                          help= '3D partendo dalla dicom')
    
-
     args = parser.parse_args()
     
     if (args.organize_series and args.path_to_dicom):
@@ -59,7 +62,17 @@ if __name__ == "__main__":
         sigmoid(args.path_to_nrrd, args.output_path)
 
     if (args.run_hough_transform and args.path_to_nrrd and args.output_path):
-        hough_transform(args.path_to_nrrd, args.output_path) 
+        hough_transform(args.path_to_nrrd, args.output_path) #center =
+        #connected_threshold(args.path_to_nrrd, center)
+    
+    if (args.run_connected_threshold and args.path_to_nrrd and args.output_path):
+        connected_threshold(args.path_to_nrrd, args.output_path)
+    
+    if (args.run_erode_filter and args.path_to_nrrd and args.output_path):
+        erode_filter(args.path_to_nrrd, args.output_path)
+    
+    if (args.run_connected_threshold2 and args.path_to_nrrd and args.output_path):
+        connected_threshold2(args.path_to_nrrd, args.output_path)
 
     if (args.run_connected_threshold and args.path_to_nrrd and args.output_path):
         connected_threshold(args.path_to_nrrd, args.output_path)
@@ -88,9 +101,18 @@ if __name__ == "__main__":
     if (args.aorta_segmentation and args.path_to_dicom and args.output_path):
         aorta_segmentation(args.path_to_dicom, args.output_path)
 
+    if (args.run_histogram and args.path_to_nrrd):
+        histogram(args.path_to_nrrd)
+ 
+    if (args.run_subtraction and args.path_to_nrrd and args.path_to_nrrd2 and args.output_path):
+        subtraction(args.path_to_nrrd, args.path_to_nrrd2, args.output_path)
 
+    if (args.build_surface and args.path_to_nrrd):
+        build_surface(args.path_to_nrrd)
 
+    if (args.smooth_surface and args.path_to_vtk and args.output_path):
+        smooth_surface(args.path_to_vtk, args.output_path)
 
-
+    
 
 
